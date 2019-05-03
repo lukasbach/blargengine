@@ -1,4 +1,6 @@
-import {AbstractGame, AbstractGameConstructor, Board, Level, RenderContext} from "./AbstractGame";
+import {RenderContext} from "./RenderContext";
+import {AbstractGame, AbstractGameConstructor} from "./AbstractGame";
+import {Level} from "./Level";
 
 export interface IKeyMapping {
   keyId: string;
@@ -59,7 +61,11 @@ export class GameEngine {
   }
 
   private initializeLevel() {
-    this.game.board = this.currentLevel.createBoard();
+    this.game.board = this.currentLevel.createBoard(
+      alias => this.game.createAlias(alias.name, alias.refersTo)
+    );
+
+    this.game.onInitLevel();
   }
 
   private get currentLevel() {
@@ -104,5 +110,10 @@ export class GameEngine {
   redrawScene() {
     this.canvas.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     this.game.board.render(this.createRenderContext());
+
+    const bottomLegend = this.game.renderBottomLegend();
+    if (bottomLegend) {
+      bottomLegend.render(this.createRenderContext());
+    }
   }
 }

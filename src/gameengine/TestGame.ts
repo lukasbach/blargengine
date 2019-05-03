@@ -1,13 +1,9 @@
-import {
-  AbstractGame,
-  Entity,
-  EntityTemplate,
-  IPlayerKeyboardEvent, IPlayerMouseClickEvent,
-  KeyDefine,
-  Level,
-  LevelDefine,
-  Sprite
-} from "./AbstractGame";
+import {IPlayerKeyboardEvent, IPlayerMouseClickEvent, KeyDefine, LevelDefine} from "./types";
+import {Sprite} from "./Sprite";
+import {EntityTemplate} from "./EntityTemplate";
+import {AbstractGame} from "./AbstractGame";
+import {Level} from "./Level";
+import {Box, UserInterface} from "./UserInterface";
 
 export class TestGame extends AbstractGame {
 
@@ -19,9 +15,32 @@ export class TestGame extends AbstractGame {
     defineKey('left', '', '', 'arrowleft');
   }
 
-
   onInput(event: IPlayerMouseClickEvent | IPlayerKeyboardEvent) {
-    this.getEntity('player')!.hookToMovement(event, this.nextTick.bind(this));
+    this.getEntity('player').hookToMovement(event, () => {
+      this.board.storeStep();
+      this.nextTick();
+    });
+
+    if (event.type === "keypressed" && event.keyname === "action") {
+      this.board.goBack();
+      this.nextTick();
+    }
+  }
+
+  onInitLevel() {
+    this.board.storeStep();
+  }
+
+  renderBottomLegend() {
+    return UserInterface.fromMap(
+      [
+        { id: 'X', render: new Box(20, 10, 'orange') }
+      ], [
+        '..X..',
+        '.....',
+        '....X'
+      ]
+    );
   }
 
   defineLevels(defineLevel: LevelDefine) {
@@ -34,12 +53,19 @@ export class TestGame extends AbstractGame {
     ]);
     const spr2 = new Sprite(['red', 'blue', 'green', 'yellow'], [
       'ddddd',
-      'daaad',
-      'dcccd',
-      'dbbcd',
+      'd...d',
+      'd...d',
+      'd...d',
       'ddddd'
     ]);
-    const floor = new Sprite(['green'], [
+    const spr3 = new Sprite(['red', 'blue', 'green', 'yellow'], [
+      'aaaaa',
+      'abbba',
+      'abcba',
+      'abbba',
+      'aaaaa'
+    ]);
+    const floor = new Sprite(['chocolate'], [
       'aaaaa',
       'aaaaa',
       'aaaaa',
@@ -47,15 +73,31 @@ export class TestGame extends AbstractGame {
       'aaaaa'
     ]);
 
+    const player = new EntityTemplate(spr2, 'player');
+    player.setPhysics({
+      blocking: this.createEntityCollection('walls'),
+      pushable: this.createEntityCollection('pushable')
+    });
+
+    const block = new EntityTemplate(spr3);
+    block.setPhysics({
+      blocking: this.createEntityCollection('walls'),
+      pushable: this.createEntityCollection('pushable')
+    });
+
     defineLevel(new Level([
-      { id: 'A', layer: 'bg', entity: new EntityTemplate(spr1) },
-      { id: 'B', layer: 'bg', entity: new EntityTemplate(floor) },
-      { id: 'C', layer: 'fg', entity: new EntityTemplate(spr2, 'player') },
+      { id: 'B', layer: 'bg', entity: new EntityTemplate(floor), default: true },
+      { id: 'A', layer: 'walls', entity: new EntityTemplate(spr1) },
+      { id: 'C', layer: 'fg', entity: player },
+      { id: 'P', layer: 'pushable', entity: block },
     ], [
-      'AAAAAAA',
-      'AABBBAA',
-      'AABCBAA',
-      'AAAAAAA',
+      'AAAAAAAA',
+      'A.......',
+      'A.......',
+      'A..P....',
+      'A.P...AA',
+      'A...C.AA',
+      'AAAAAAAA',
     ]))
   }
 }
