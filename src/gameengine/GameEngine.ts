@@ -2,9 +2,9 @@ import {CanvasRenderContext, MeasureRenderContext, RenderContext} from "./Render
 import {AbstractGame, AbstractGameConstructor} from "./AbstractGame";
 import {Level} from "./Level";
 import {Position} from "./Position";
-import {UserInterface} from "./UserInterface";
+import {UserInterface} from "./userinterface/UserInterface";
 import {ICanReceiveInput} from "./types";
-import {MenuComponent} from "./MenuComponent";
+import {MenuComponent} from "./userinterface/MenuComponent";
 import {FloatingRender} from "./FloatingRender";
 
 export interface IKeyMapping {
@@ -75,6 +75,8 @@ export class GameEngine {
     this.legends = {};
 
     MeasureRenderContext.setGameProps(this.game.gameprops);
+
+    this.game.prepareSprites();
 
     this.game.defineLevels(level => {
       this.levels.push(level);
@@ -170,7 +172,11 @@ export class GameEngine {
 
   private redrawScene() {
     this.canvas.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
-    this.game.board.render(this.createRenderContext());
+    this.canvas.fillStyle = this.game.backgroundColor;
+    this.canvas.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
+
+    FloatingRender.floatRender(this.game.board, this.createRenderContext(), "center", "center");
+    // this.game.board.render(this.createRenderContext());
 
     this.renderBottomLegend();
 

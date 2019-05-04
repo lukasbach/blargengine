@@ -81,6 +81,9 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     [canMove, newPosition] = this.moveRespectPushablePhysics(this.pos, newPosition, Position.fromPosition(position));
     if (!canMove) return false;
 
+    [canMove, newPosition] = this.moveRespectDestroyablePhysics(newPosition);
+    if (!canMove) return false;
+
     this.pos = newPosition;
     return true;
   }
@@ -184,6 +187,20 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
       });
 
       return [success, success ? newPosition : oldPosition];
+    }
+    return [true, newPosition];
+  }
+
+  private moveRespectDestroyablePhysics(
+    newPosition: Position,
+  ): [boolean, Position] {
+    if (this.physics && this.physics.destroying) {
+      this.physics.destroying.forEach(item => {
+        if (item.isAt(newPosition)) {
+          console.log('destroy self!')
+          return [true, newPosition];
+        }
+      });
     }
     return [true, newPosition];
   }

@@ -12,7 +12,10 @@ import {
 } from "./types";
 import {Layer} from "./Layer";
 import {EntityCollection} from "./EntityCollection";
-import {UserInterface} from "./UserInterface";
+import {UserInterface} from "./userinterface/UserInterface";
+import {ColorPalette} from "./color/ColorPalette";
+import {defaultColorPalettes} from "./color/defaultPalettes";
+import {Sprite} from "./Sprite";
 
 export interface AbstractGameConstructor {
   new (engine: GameEngine): AbstractGame;
@@ -39,6 +42,8 @@ export abstract class AbstractGame implements ICanReceiveInput {
     this.engine = engine;
     this.nextTickFlag = false;
     this.aliases = [];
+
+    this.sprites = {};
   }
 
   public gameprops: IGameProps = {
@@ -46,7 +51,13 @@ export abstract class AbstractGame implements ICanReceiveInput {
     pixelSize: 6
   };
 
-  state: object = {};
+  public state: object = {};
+  protected defaultColorPalettes = defaultColorPalettes;
+  protected colorPalette: ColorPalette<any> = defaultColorPalettes['pollen8'];
+  public backgroundColor: string = this.colorPalette.getBackgroundColor().color;
+
+  protected abstract spriteDefinitions: { [key: string]: string[] };
+  protected sprites: { [key: string]: Sprite };
 
   defineLevels(defineLevel: LevelDefine) {}
   defineKeyMapping(defineKey: KeyDefine) {}
@@ -113,6 +124,13 @@ export abstract class AbstractGame implements ICanReceiveInput {
       throw Error('Err!');
     } else {
       return e.refersTo;
+    }
+  }
+
+  public prepareSprites() {
+    this.sprites = {};
+    for (let key of Object.keys(this.spriteDefinitions)) {
+      this.sprites[key] = new Sprite(this.colorPalette.getColors(), this.spriteDefinitions[key]);
     }
   }
 

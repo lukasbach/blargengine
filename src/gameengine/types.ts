@@ -62,3 +62,9 @@ export interface ITimeTravelable {
 export interface ICanReceiveInput {
   onInput?(event: IPlayerMouseClickEvent | IPlayerKeyboardEvent): void;
 }
+
+export interface IColor<ALIASES extends string = string> {
+  color: string;
+  alias: ALIASES;
+  type?: 'primary' | 'secondary' | 'background' | 'border'
+}

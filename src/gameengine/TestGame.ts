@@ -3,9 +3,63 @@ import {Sprite} from "./Sprite";
 import {EntityTemplate} from "./EntityTemplate";
 import {AbstractGame} from "./AbstractGame";
 import {Level} from "./Level";
-import {Box, UserInterface, Text} from "./UserInterface";
+import {Box, UserInterface, Text} from "./userinterface/UserInterface";
 
 export class TestGame extends AbstractGame {
+
+  backgroundColor = this.colorPalette.getBackgroundColor().color;
+
+  spriteDefinitions = {
+    player: [
+      'ddddd',
+      'd...d',
+      'd...d',
+      'd...d',
+      'ddddd'
+    ],
+    floor: [
+      'aaaaa',
+      'aaaaa',
+      'aaaaa',
+      'aaaaa',
+      'aaaaa'
+    ],
+    wall: [
+      'bbbbb',
+      'bbbbb',
+      'bbbbb',
+      'bbbbb',
+      'bbbbb'
+    ],
+    key1: [
+      '..b..',
+      '.b.b.',
+      '..b..',
+      '..b..',
+      '..bb.'
+    ],
+    key2: [
+      '..c..',
+      '.c.c.',
+      '..c..',
+      '..c..',
+      '..cc.'
+    ],
+    key3: [
+      '..d..',
+      '.d.d.',
+      '..d..',
+      '..d..',
+      '..dd.'
+    ],
+    pushable: [
+      'abbca',
+      'bbbbb',
+      'ccccc',
+      'aaaaa',
+      'abbca'
+    ],
+  }
 
   defineKeyMapping(defineKey: KeyDefine) {
     defineKey('action', 'Action key', '', 'enter');
@@ -35,7 +89,7 @@ export class TestGame extends AbstractGame {
     return UserInterface.fromMap(
       [
         { id: 'X', render: new Box(20, 10, 'orange') },
-        { id: 'T', render: new Text('welcome to my very\nstupid game with bad text rendering', 'black', 50) },
+        { id: 'T', render: new Text('welcome to my very stupid game', 'black', 50) },
       ], [
         '..X..',
         '....X',
@@ -45,56 +99,29 @@ export class TestGame extends AbstractGame {
   }
 
   defineLevels(defineLevel: LevelDefine) {
-    const spr1 = new Sprite(['red', 'blue', 'green', 'yellow'], [
-      'abbca',
-      'bbbbb',
-      'ccccc',
-      'aaaaa',
-      'abbca'
-    ]);
-    const spr2 = new Sprite(['red', 'blue', 'green', 'yellow'], [
-      'ddddd',
-      'd...d',
-      'd...d',
-      'd...d',
-      'ddddd'
-    ]);
-    const spr3 = new Sprite(['red', 'blue', 'green', 'yellow'], [
-      'aaaaa',
-      'abbba',
-      'abcba',
-      'abbba',
-      'aaaaa'
-    ]);
-    const floor = new Sprite(['chocolate'], [
-      'aaaaa',
-      'aaaaa',
-      'aaaaa',
-      'aaaaa',
-      'aaaaa'
-    ]);
-
-    const player = new EntityTemplate(spr2, 'player');
+    const player = new EntityTemplate(this.sprites.player, 'player');
     player.setPhysics({
       blocking: this.createEntityCollection('walls'),
-      pushable: this.createEntityCollection('pushable')
+      pushable: this.createEntityCollection('pushable'),
+      destroying: this.createEntityCollection('collectible')
     });
 
-    const block = new EntityTemplate(spr3);
+    const block = new EntityTemplate(this.sprites.pushable);
     block.setPhysics({
       blocking: this.createEntityCollection('walls'),
       pushable: this.createEntityCollection('pushable')
     });
 
     defineLevel(new Level([
-      { id: 'B', layer: 'bg', entity: new EntityTemplate(floor), default: true },
-      { id: 'A', layer: 'walls', entity: new EntityTemplate(spr1) },
+      { id: 'B', layer: 'bg', entity: new EntityTemplate(this.sprites.floor), default: true },
+      { id: 'A', layer: 'walls', entity: new EntityTemplate(this.sprites.wall) },
       { id: 'C', layer: 'fg', entity: player },
       { id: 'P', layer: 'pushable', entity: block },
+      { id: 'K', layer: 'collectible', entity: new EntityTemplate(this.sprites.key1) },
     ], [
       'AAAAAAAA',
       'A.......',
-      'A.......',
+      'A......K',
       'A..P....',
       'A.P...AA',
       'A...C.AA',

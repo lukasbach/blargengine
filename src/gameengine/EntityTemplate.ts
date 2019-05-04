@@ -31,6 +31,11 @@ export class EntityTemplate<STATE = {}> {
     this.physics = physics;
   }
 
+  public withPhysics(physics: IEntityPhysics): EntityTemplate<STATE> {
+    this.setPhysics(physics);
+    return this;
+  }
+
   public createEntity(pos: ISerializedPosition, layer: Layer) {
     const clone = new Entity(
       this.animations.find(a => a.name === 'idle')!.render,

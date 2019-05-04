@@ -1,8 +1,8 @@
-import {Renderable} from "./Renderable";
-import {IMeasurements, MeasureRenderContext, RenderContext} from "./RenderContext";
-import {Position} from "./Position";
-import {textFont} from "./Font";
-import {ICanReceiveInput, IPlayerKeyboardEvent, IPlayerMouseClickEvent} from "./types";
+import {Renderable} from "../Renderable";
+import {IMeasurements, MeasureRenderContext, RenderContext} from "../RenderContext";
+import {Position} from "../Position";
+import {textFont} from "../Font";
+import {ICanReceiveInput, IPlayerKeyboardEvent, IPlayerMouseClickEvent} from "../types";
 import {isTemplateElement} from "@babel/types";
 import {render} from "react-dom";
 
