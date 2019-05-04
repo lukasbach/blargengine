@@ -63,8 +63,6 @@ export class Level {
       }
     }
 
-    console.log(board, defaultItem);
-
     return board;
   }
 }

@@ -11,7 +11,7 @@ import {Layer} from "./Layer";
 import {Position} from "./Position";
 import {TimeBox} from "./TimeBox";
 
-export class Entity<STATE = {}> extends Renderable implements ITimeTravelable {
+export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   public readonly alias?: string;
   public state: Partial<STATE>;
 
@@ -30,8 +30,6 @@ export class Entity<STATE = {}> extends Renderable implements ITimeTravelable {
   }>;
 
   constructor(idle: RenderableAt, layer: Layer, x: number, y: number, alias?: string) {
-    super();
-
     this.animations = [
       {
         name: 'idle',
@@ -180,7 +178,6 @@ export class Entity<STATE = {}> extends Renderable implements ITimeTravelable {
       let success = true;
 
       this.physics.sticking.forEach(item => {
-        console.log(item, item.getPosition().isAdjacent(oldPosition));
         if (item.getPosition().isAdjacent(oldPosition) && (!sourceEntity || !sourceEntity.isAt(item.getPosition()))) {
           success = success && item.moveRelative(relativePosition.getPushPosition(), this);
         }

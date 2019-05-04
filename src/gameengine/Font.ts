@@ -28,112 +28,267 @@ interface IFont {
   z: FontLetter;
 }
 
-export const textFont: Partial<IFont> = {
+export const textFont: {[key: string]: FontLetter} = {
   a: [
-    'aaaa.',
-    '...aa',
-    '.aaaa',
-    'aa.aa',
-    '.aaa.',
+    '.....',
+    '.....',
+    '.aaaa.', // upper line
+    'a...a',
+    'a..aa',
+    '.aa.a', // lower line
+    '.....',
+    '.....',
   ],
   b: [
-    'a....',
     '.a...',
-    '.aaa.',
+    '.a...',
+    '.aaa.', // upper line
     '.a..a',
-    '..aa.',
+    '.a..a',
+    '.aaa.', // lower line
+    '.....',
+    '.....',
   ],
   c: [
     '.....',
     '.....',
-    '.aaa.',
+    '.aaa.', // upper line
     'a....',
-    '.aaa.',
+    'a....',
+    '.aaa.', // lower line
+    '.....',
+    '.....',
   ],
   d: [
-    '....a',
+    '..aa.',
     '...a.',
-    '.aaa.',
+    '.aaa.', // upper line
     'a..a.',
-    '.aa..',
+    'a..a.',
+    '.aa..', // lower line
+    '.....',
+    '.....',
   ],
   e: [
+    '.....',
+    '.....',
     '.aaa.',
+    'a...a', // upper line
+    'aaaaa',
     'a....',
-    'aaa..',
-    'a...',
-    '.aaa.',
+    '.aaa.', // lower line
+    '.....',
   ],
   f: [
     '...aa',
     '..a..',
-    '.aaaa',
+    '.a...', // upper line
+    '.aaa.',
     '.a...',
-    '.a...',
+    '.a...', // lower line
+    'a....',
+    '.....',
   ],
   g: [
-    '.aaa.',
+    '.....',
+    '.....',
+    '.aaa.', // upper line
     'a...a',
-    '.aaa.',
+    'a...a',
+    '.aaaa', // lower line
     '...a.',
     '.aa..',
   ],
   h: [
+    'aa...',
     '.a...',
-    '.a...',
-    '.aa..',
-    '.a.a.',
-    '.a.a.',
+    '.a...', // upper line
+    '.aaa.',
+    '.a..a',
+    '.a..a', // lower line
+    '.....',
+    '.....',
   ],
   i: [
-    '..a..',
+    '.a...',
     '.....',
-    '..a..',
-    '..a..',
-    '.aaa.',
+    '.a...', // upper line
+    '.a...',
+    '.a...',
+    'aaa..', // lower line
+    '.....',
+    '.....',
   ],
   j: [
     '..a..',
     '.....',
+    '..a..', // upper line
     '..a..',
-    'a.a..',
-    '.aa..',
+    '..a..',
+    '..a..', // lower line
+    '..a..',
+    'aa...',
   ],
   k: [
     'a....',
-    'a.a..',
+    'a....',
+    'a.aa.', // upper line
     'aa...',
     'a.a..',
-    'a.aa.',
+    'a..a.', // lower line
+    '.....',
+    '.....',
   ],
   l: [
-    '.aa..',
-    '..a..',
-    '..a..',
-    '..a..',
-    '.aaa.',
+    'aa...',
+    '.a...',
+    '.a...', // upper line
+    '.a...',
+    '.a...',
+    'aaa..', // lower line
+    '.....',
+    '.....',
   ],
   m: [
     '.....',
     '.....',
-    'aa.a.',
+    'aa.a.', // upper line
     'a.a.a',
     'a.a.a',
+    'a.a.a', // lower line
+    '.....',
+    '.....',
   ],
   n: [
     '.....',
     '.....',
-    'aa...',
+    'aa...', // upper line
+    'a.a...',
     'a.a..',
-    'a.a..',
+    'a.a..', // lower line
+    '.....',
+    '.....',
   ],
   o: [
     '.....',
-    '.aaa.',
+    '.....',
+    '.aaa.', // upper line
     'a...a',
     'a...a',
-    '.aaa.',
+    '.aaa.', // lower line
+    '.....',
+    '.....',
   ],
+  p: [
+    '.....',
+    '.....',
+    'aaaa.', // upper line
+    '.a..a',
+    '.a..a',
+    '.aaa.', // lower line
+    '.a...',
+    'aaa..',
+  ],
+  q: [
+    '.....',
+    '.....',
+    '.aaaa', // upper line
+    'a..a.',
+    'a..a.',
+    '.aaa.', // lower line
+    '...a.',
+    '..aaa',
+  ],
+  r: [
+    '.....',
+    '.....',
+    '.a.aa', // upper line
+    '..a..',
+    '..a..',
+    '.aaa.', // lower line
+    '.....',
+    '.....',
+  ],
+  s: [
+    '.....',
+    '.aaa.',
+    'a....', // upper line
+    '.aa..',
+    '...a.',
+    'aaa..', // lower line
+    '.....',
+    '.....',
+  ],
+  t: [
+    '.....',
+    '.a...',
+    'aaa..', // upper line
+    '.a...',
+    '.a...',
+    '..a..', // lower line
+    '.....',
+    '.....',
+  ],
+  u: [
+    '.....',
+    '.....',
+    'a..a.', // upper line
+    'a..a.',
+    'a..a.',
+    '.aaa.', // lower line
+    '.....',
+    '.....',
+  ],
+  v: [
+    '.....',
+    '.....',
+    'a...a', // upper line
+    '.a.a.',
+    '.a.a.',
+    '..a..', // lower line
+    '.....',
+    '.....',
+  ],
+  w: [
+    '.....',
+    '.....',
+    'a.a.a', // upper line
+    'a.a.a',
+    'a.a.a',
+    '.a.aa', // lower line
+    '.....',
+    '.....',
+  ],
+  x: [
+    '.....',
+    '.....',
+    'a..aa', // upper line
+    '.aa..',
+    '..aa.',
+    'aa..a', // lower line
+    '.....',
+    '.....',
+  ],
+  y: [
+    '.....',
+    '.....',
+    'a-..a', // upper line
+    '.a..a',
+    '..aa.',
+    '...a.', // lower line
+    '..a..',
+    'aa...',
+  ],
+  z: [
+    '.....',
+    '.....',
+    'aaaa.', // upper line
+    '..a..',
+    '.a...',
+    'aaaa.', // lower line
+    '.....',
+    '.....',
+  ]
 };
 
 export const headFont: Partial<IFont> = {

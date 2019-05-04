@@ -3,12 +3,10 @@ import {getColorCode} from "./utils";
 import {Color, ISerializedPosition, ISpriteData} from "./types";
 import {RenderableAt} from "./Renderable";
 
-export class Sprite extends RenderableAt {
+export class Sprite implements RenderableAt {
   private readonly data: ISpriteData;
 
   constructor(colors: Color[], lines: string[]) {
-    super();
-
     this.data = {
       lines: lines.map(l => ({
         cells: l.split('').map(c => ({

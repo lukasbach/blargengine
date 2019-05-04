@@ -1,7 +1,15 @@
 import {GameEngine} from "./GameEngine";
 import {Entity} from "./Entity";
 import {Board} from "./Board";
-import {IAlias, IGameProps, IPlayerKeyboardEvent, IPlayerMouseClickEvent, KeyDefine, LevelDefine} from "./types";
+import {
+  IAlias,
+  ICanReceiveInput,
+  IGameProps,
+  IPlayerKeyboardEvent,
+  IPlayerMouseClickEvent,
+  KeyDefine,
+  LevelDefine
+} from "./types";
 import {Layer} from "./Layer";
 import {EntityCollection} from "./EntityCollection";
 import {UserInterface} from "./UserInterface";
@@ -10,7 +18,7 @@ export interface AbstractGameConstructor {
   new (engine: GameEngine): AbstractGame;
 }
 
-export abstract class AbstractGame {
+export abstract class AbstractGame implements ICanReceiveInput {
   private _board?: Board;
   private aliases: IAlias[];
 
@@ -34,8 +42,8 @@ export abstract class AbstractGame {
   }
 
   public gameprops: IGameProps = {
-    tileSize: 7,
-    pixelSize: 2
+    tileSize: 5,
+    pixelSize: 6
   };
 
   state: object = {};

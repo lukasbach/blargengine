@@ -3,7 +3,7 @@ import {Sprite} from "./Sprite";
 import {EntityTemplate} from "./EntityTemplate";
 import {AbstractGame} from "./AbstractGame";
 import {Level} from "./Level";
-import {Box, UserInterface} from "./UserInterface";
+import {Box, UserInterface, Text} from "./UserInterface";
 
 export class TestGame extends AbstractGame {
 
@@ -34,11 +34,12 @@ export class TestGame extends AbstractGame {
   renderBottomLegend() {
     return UserInterface.fromMap(
       [
-        { id: 'X', render: new Box(20, 10, 'orange') }
+        { id: 'X', render: new Box(20, 10, 'orange') },
+        { id: 'T', render: new Text('welcome to my very\nstupid game with bad text rendering', 'black', 50) },
       ], [
         '..X..',
-        '.....',
-        '....X'
+        '....X',
+        'X..T.'
       ]
     );
   }

@@ -1,10 +1,10 @@
 import {RenderContext} from "./RenderContext";
-import {ISerializedPosition} from "./types";
+import {ICanReceiveInput, ISerializedPosition} from "./types";
 
-export abstract class Renderable {
-  public abstract render(renderContext: RenderContext): void;
+export interface Renderable extends ICanReceiveInput {
+  render(renderContext: RenderContext): void;
 }
 
-export abstract class RenderableAt {
-  public abstract renderAt(renderContext: RenderContext, position: ISerializedPosition): void;
+export interface RenderableAt {
+  renderAt(renderContext: RenderContext, position: ISerializedPosition): void;
 }

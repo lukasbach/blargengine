@@ -5,7 +5,9 @@ import {EntityCollection} from "./EntityCollection";
 
 export interface IPlayerMouseClickEvent {
   type: 'mouseclick',
-  tile: ISerializedPosition
+  tile: ISerializedPosition,
+  x: number,
+  y: number
 }
 
 export interface IPlayerKeyboardEvent {
@@ -55,4 +57,8 @@ export interface IEntityPhysics {
 export interface ITimeTravelable {
   goBack(): void;
   storeStep(): void;
+}
+
+export interface ICanReceiveInput {
+  onInput?(event: IPlayerMouseClickEvent | IPlayerKeyboardEvent): void;
 }

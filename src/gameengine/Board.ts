@@ -3,12 +3,11 @@ import {Renderable} from "./Renderable";
 import {Layer} from "./Layer";
 import {ITimeTravelable} from "./types";
 
-export class Board extends Renderable implements ITimeTravelable {
+export class Board implements ITimeTravelable, Renderable {
   private layers: Layer[];
   private layerAliases: string[];
 
   constructor() {
-    super();
     this.layers = [];
     this.layerAliases = [];
   }

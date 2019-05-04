@@ -2,27 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eda3d066-2084-49b2-80b6-e0f450aae551" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Board.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Entity.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/EntityCollection.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/EntityTemplate.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Font.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Layer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Level.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Position.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/RenderContext.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Renderable.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Sound.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/Sprite.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/TimeBox.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/UserInterface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/types.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gameengine/utils.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameengine/FloatingRender.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameengine/MenuComponent.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameengine/AbstractGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/AbstractGame.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Board.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Board.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Font.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Font.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameengine/GameEngine.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/GameEngine.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Layer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Layer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Level.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Level.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/RenderContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/RenderContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Renderable.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Renderable.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/Sprite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/Sprite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gameengine/TestGame.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/TestGame.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/UserInterface.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/UserInterface.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gameengine/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/gameengine/types.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,12 +30,24 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gameengine/TestGame.ts">
+        <entry file="file://$PROJECT_DIR$/src/gameengine/UserInterface.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="658">
-              <caret line="43" column="3" lean-forward="true" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
+            <state relative-caret-position="1083">
+              <caret line="178" column="9" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
               <folding>
-                <element signature="e#0#93#0" expanded="true" />
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameengine/RenderContext.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="539">
+              <caret line="102" column="43" lean-forward="true" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -47,8 +56,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gameengine/AbstractGame.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+            <state relative-caret-position="111">
+              <caret line="20" column="53" lean-forward="true" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="53" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -59,20 +68,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gameengine/GameEngine.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1491">
-              <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+            <state relative-caret-position="1015">
+              <caret line="177" column="29" selection-start-line="177" selection-start-column="29" selection-end-line="177" selection-end-column="29" />
               <folding>
-                <element signature="e#0#46#0" expanded="true" />
+                <element signature="e#0#89#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/gameengine/UserInterface.ts">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameengine/FloatingRender.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1190">
-              <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
+            <state relative-caret-position="272">
+              <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -80,13 +89,25 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/gameengine/Sprite.ts">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gameengine/MenuComponent.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="714">
-              <caret line="42" column="6" lean-forward="true" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+            <state relative-caret-position="561">
+              <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
               <folding>
-                <element signature="e#0#46#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gameengine/types.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1054">
+              <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -96,11 +117,16 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console.log</find>
       <find>Obj</find>
       <find>back</find>
       <find>Tick</find>
       <find>referst</find>
+      <find>/ 2</find>
+      <find>console.log</find>
+      <find>t</find>
+      <find>s:</find>
+      <find>a:</find>
+      <find>x:</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -110,28 +136,30 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/index.css" />
-        <option value="$PROJECT_DIR$/src/App.tsx" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/gameengine/utils.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Renderable.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/EntityCollection.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Sprite.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/Sound.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Font.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/Position.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/EntityTemplate.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Level.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/types.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Layer.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/Board.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/TimeBox.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/Level.ts" />
+        <option value="$PROJECT_DIR$/src/App.tsx" />
+        <option value="$PROJECT_DIR$/src/gameengine/Renderable.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/Board.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/Entity.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/Layer.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/Sprite.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/RenderContext.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/types.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/Font.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/TestGame.ts" />
-        <option value="$PROJECT_DIR$/src/gameengine/GameEngine.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/AbstractGame.ts" />
         <option value="$PROJECT_DIR$/src/gameengine/UserInterface.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/FloatingRender.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/GameEngine.ts" />
+        <option value="$PROJECT_DIR$/src/gameengine/MenuComponent.ts" />
       </list>
     </option>
   </component>
@@ -142,10 +170,10 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="987" />
-    <option name="y" value="-571" />
-    <option name="width" value="1932" />
-    <option name="height" value="1045" />
+    <option name="x" value="1912" />
+    <option name="y" value="-565" />
+    <option name="width" value="1096" />
+    <option name="height" value="1896" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -153,7 +181,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -176,12 +203,13 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556924383974" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1556979331049" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -216,18 +244,19 @@
       <updated>1556721040826</updated>
       <workItem from="1556721043925" duration="21801000" />
       <workItem from="1556827385492" duration="4339000" />
-      <workItem from="1556911222258" duration="10580000" />
+      <workItem from="1556911222258" duration="22326000" />
+      <workItem from="1556974299698" duration="4237000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36720000" />
+    <option name="totallyTimeSpent" value="52703000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-565" width="1096" height="1896" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="1593" y="31" width="326" height="1008" id="Project" order="0" type="WINDOWED" visible="true" weight="0.28667954" />
+      <window_info active="true" content_ui="combo" x="1589" y="31" width="330" height="1008" id="Project" order="0" type="WINDOWED" visible="true" weight="0.28667954" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -276,16 +305,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -300,34 +319,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="48" lean-forward="true" selection-start-line="5" selection-start-column="48" selection-end-line="5" selection-end-column="48" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="1964" column="4" selection-start-line="1964" selection-start-column="4" selection-end-line="1964" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/Sound.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="17" lean-forward="true" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/Font.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1389">
-          <caret line="97" column="12" selection-start-line="97" selection-start-column="12" selection-end-line="97" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -358,50 +353,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/Board.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="12" lean-forward="true" selection-start-line="42" selection-start-column="12" selection-end-line="42" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/Layer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="10" lean-forward="true" selection-start-line="26" selection-start-column="10" selection-end-line="26" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/Entity.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="519">
-          <caret line="79" column="46" selection-start-line="79" selection-start-column="46" selection-end-line="79" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/TimeBox.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="27" column="1" lean-forward="true" selection-start-line="27" selection-start-column="1" selection-end-line="27" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/types.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="55" column="9" selection-start-line="55" selection-start-column="9" selection-end-line="55" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -415,16 +370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/Renderable.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="22" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/Position.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -432,20 +377,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/RenderContext.ts">
+    <entry file="file://$PROJECT_DIR$/src/App.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="47" column="2" selection-start-line="47" selection-start-column="2" selection-end-line="47" selection-end-column="2" />
+        <state relative-caret-position="306">
+          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
           <folding>
-            <element signature="e#0#56#0" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gameengine/GameEngine.ts">
+    <entry file="file://$PROJECT_DIR$/src/gameengine/Board.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1491">
-          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
@@ -454,40 +399,144 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/Sprite.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="714">
-          <caret line="42" column="6" lean-forward="true" selection-start-line="42" selection-start-column="6" selection-end-line="42" selection-end-column="6" />
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/SpriteAnimation.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/typescript/lib/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="6136" column="130" selection-start-line="6136" selection-start-column="77" selection-end-line="6136" selection-end-column="130" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/TestGame.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="658">
-          <caret line="43" column="3" lean-forward="true" selection-start-line="43" selection-start-column="3" selection-end-line="43" selection-end-column="3" />
+        <state relative-caret-position="709">
+          <caret line="59" column="13" lean-forward="true" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
           <folding>
             <element signature="e#0#93#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/Font.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4539">
+          <caret line="267" column="7" selection-start-line="267" selection-start-column="7" selection-end-line="267" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/Renderable.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="48" selection-start-line="3" selection-start-column="48" selection-end-line="3" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/Entity.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="731">
+          <caret line="54" selection-start-line="54" selection-end-line="54" />
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/Layer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/AbstractGame.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="629">
-          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+        <state relative-caret-position="111">
+          <caret line="20" column="53" lean-forward="true" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="53" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/types.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1054">
+          <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gameengine/UserInterface.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1190">
-          <caret line="70" column="30" selection-start-line="70" selection-start-column="30" selection-end-line="70" selection-end-column="30" />
+        <state relative-caret-position="1083">
+          <caret line="178" column="9" selection-start-line="178" selection-start-column="9" selection-end-line="178" selection-end-column="9" />
           <folding>
             <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/GameEngine.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1015">
+          <caret line="177" column="29" selection-start-line="177" selection-start-column="29" selection-end-line="177" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#89#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/FloatingRender.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="39" selection-start-line="16" selection-start-column="39" selection-end-line="16" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/RenderContext.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="102" column="43" lean-forward="true" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gameengine/MenuComponent.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="33" column="1" lean-forward="true" selection-start-line="33" selection-start-column="1" selection-end-line="33" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -3,12 +3,10 @@ import {RenderContext} from "./RenderContext";
 import {ISerializedPosition, ITimeTravelable} from "./types";
 import {Renderable} from "./Renderable";
 
-export class Layer extends Renderable implements ITimeTravelable {
+export class Layer implements ITimeTravelable, Renderable {
   entities: Entity[];
 
   constructor() {
-    super();
-
     this.entities = []
   }
 
