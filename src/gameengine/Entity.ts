@@ -1,10 +1,12 @@
 import {RenderContext} from "./RenderContext";
 import {
+  IEntityEventHandlers,
   IEntityPhysics,
   IPlayerKeyboardEvent,
   IPlayerMouseClickEvent,
   ISerializedPosition,
-  ITimeTravelable
+  ITimeTravelable,
+  MoveReason
 } from "./types";
 import {Renderable, RenderableAt} from "./Renderable";
 import {Layer} from "./Layer";
@@ -19,6 +21,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   private pos: Position;
   private animationState: string;
   private physics?: IEntityPhysics;
+  public eventHandlers?: IEntityEventHandlers;
   private animations: Array<{
     name: string;
     render: RenderableAt;
@@ -55,6 +58,11 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
 
   public setPhysics(physics: IEntityPhysics) {
     this.physics = physics;
+    return this;
+  }
+
+  public setEventHandlers(handlers: IEntityEventHandlers) {
+    this.eventHandlers = handlers;
   }
 
   public isAt(p: ISerializedPosition) {
@@ -68,9 +76,17 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     return this.pos;
   }
 
-  public moveRelative(position: ISerializedPosition, sourceEntity?: Entity): boolean {
+  public canMoveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
+    return true; // TODO
+  }
+
+  public moveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
     let newPosition = Position.fromSum(this.pos, position);
     let canMove;
+
+    canMove = reason === MoveReason.Internal || reason === MoveReason.Composed || !this.eventHandlers || !this.eventHandlers.onMove
+      || this.eventHandlers.onMove(this.pos, newPosition, reason || MoveReason.Other);
+    if (!canMove) return false;
 
     [canMove, newPosition] = this.moveRespectBlockingPhysics(this.pos, newPosition);
     if (!canMove) return false;
@@ -160,8 +176,11 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
       let success = true;
 
       this.physics.pushable.forEach(item => {
+        console.log(item);
         if (item.isAt(newPosition)) {
-          success = success && item.moveRelative(relativePosition.getPushPosition());
+          success = success && (!item.eventHandlers || !item.eventHandlers.onPush
+             || item.eventHandlers.onPush(newPosition, Position.fromSum(newPosition, relativePosition.getPushPosition())));
+          success = success && item.moveRelative(relativePosition.getPushPosition(), this, MoveReason.Push);
         }
       });
 
@@ -182,7 +201,9 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
 
       this.physics.sticking.forEach(item => {
         if (item.getPosition().isAdjacent(oldPosition) && (!sourceEntity || !sourceEntity.isAt(item.getPosition()))) {
-          success = success && item.moveRelative(relativePosition.getPushPosition(), this);
+          success = success && (!item.eventHandlers || !item.eventHandlers.onStickAlong
+            || item.eventHandlers.onStickAlong(newPosition, Position.fromSum(newPosition, relativePosition.getPushPosition())));
+          success = success && item.moveRelative(relativePosition.getPushPosition(), this, MoveReason.Stick);
         }
       });
 
@@ -197,12 +218,28 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     if (this.physics && this.physics.destroying) {
       this.physics.destroying.forEach(item => {
         if (item.isAt(newPosition)) {
+          let shouldDestroy = true;
           console.log('destroy self!')
+
+          if (this.eventHandlers && this.eventHandlers.onDestroy) {
+            shouldDestroy = this.eventHandlers.onDestroy();
+          }
           return [true, newPosition];
         }
       });
     }
     return [true, newPosition];
+  }
+
+  private moveRespectEnterPhysics(newPosition: Position) {
+    if (this.physics && this.physics.handlesEntering && this.eventHandlers && this.eventHandlers.onEnter) {
+      this.physics.handlesEntering.forEach(item => {
+        if (item.isAt(newPosition)) {
+          this.eventHandlers!.onEnter!(item);
+        }
+      });
+    }
+
   }
 
   goBack(): void {

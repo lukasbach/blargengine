@@ -2,6 +2,7 @@ import {Level} from "./Level";
 import {Layer} from "./Layer";
 import {Entity} from "./Entity";
 import {EntityCollection} from "./EntityCollection";
+import {Position} from "./Position";
 
 export interface IPlayerMouseClickEvent {
   type: 'mouseclick',
@@ -52,6 +53,27 @@ export interface IEntityPhysics {
   sticking?: EntityCollection;
   stickLimit?: number;
   destroying?: EntityCollection;
+  handlesEntering?: EntityCollection;
+}
+
+// export type MoveReason = 'userinput' | 'push' | 'stick' | 'internal' | 'other' | 'composed';
+export enum MoveReason {
+  UserInput,
+  Push,
+  Stick,
+  Composed,
+  Internal,
+  Other
+}
+
+export interface IEntityEventHandlers {
+  onMove?: (from: Position, to: Position, reason: MoveReason) => boolean;
+  onPush?: (from: Position, to: Position) => boolean;
+  onStickAlong?: (from: Position, to: Position) => boolean;
+  onDestroy?: () => boolean;
+  onKey?: (key: string) => void;
+  onClick?: () => void;
+  onEnter?: (entity: Entity) => void;
 }
 
 export interface ITimeTravelable {

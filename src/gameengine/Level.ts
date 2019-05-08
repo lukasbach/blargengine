@@ -42,7 +42,7 @@ export class Level {
           }
 
           const layer = board.getLayer(legendEntry.layer);
-          layer.addEntity(legendEntry.entity.createEntity({ x, y }, layer));
+          legendEntry.entity.createEntity({ x, y }, layer);
         }
 
         x++;
@@ -58,7 +58,7 @@ export class Level {
       const defaultLayer = board.getLayer(defaultItem.layer);
       for (let i = 0; i < x; i++) {
         for (let j = 0; j < y; j++) {
-          defaultLayer.addEntity(defaultItem.entity.createEntity({ x: i, y: j }, defaultLayer));
+          defaultItem.entity.createEntity({ x: i, y: j }, defaultLayer);
         }
       }
     }

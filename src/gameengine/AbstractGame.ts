@@ -48,7 +48,7 @@ export abstract class AbstractGame implements ICanReceiveInput {
 
   public gameprops: IGameProps = {
     tileSize: 5,
-    pixelSize: 6
+    pixelSize: 8
   };
 
   public state: object = {};

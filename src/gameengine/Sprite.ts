@@ -5,15 +5,20 @@ import {RenderableAt} from "./Renderable";
 
 export class Sprite implements RenderableAt {
   private readonly data: ISpriteData;
+  private readonly colors: Color[];
+  private readonly lines: string[];
 
   constructor(colors: Color[], lines: string[]) {
+    console.log(lines)
     this.data = {
       lines: lines.map(l => ({
         cells: l.split('').map(c => ({
           color: this.getColorFromChar(colors, c)
         }))
       }))
-    }
+    };
+    this.lines = lines;
+    this.colors = colors;
   }
 
   public getData(): ISpriteData {
@@ -39,5 +44,25 @@ export class Sprite implements RenderableAt {
         }, cell.color);
       })
     })
+  }
+
+  public getSubSprites(tileSize: number) {
+    const output: Array<{ x: number, y: number, sprite: Sprite }> = [];
+
+    for (let y = 0; y < this.data.lines.length / tileSize; y++) {
+      for (let x = 0; x < this.data.lines[x].cells.length / tileSize; x++) {
+        output.push({
+          x, y,
+          sprite: new Sprite(
+            this.colors,
+            this.lines
+              .slice(y * tileSize, (y + 1) * tileSize)
+              .map(line => line.slice(x * tileSize, (x + 1) * tileSize))
+          )
+        });
+      }
+    }
+
+    return output;
   }
 }

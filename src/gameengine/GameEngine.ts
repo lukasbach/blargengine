@@ -175,8 +175,8 @@ export class GameEngine {
     this.canvas.fillStyle = this.game.backgroundColor;
     this.canvas.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
 
-    FloatingRender.floatRender(this.game.board, this.createRenderContext(), "center", "center");
-    // this.game.board.render(this.createRenderContext());
+     FloatingRender.floatRender(this.game.board, this.createRenderContext(), "center", "center");
+     // this.game.board.render(this.createRenderContext());
 
     this.renderBottomLegend();
 

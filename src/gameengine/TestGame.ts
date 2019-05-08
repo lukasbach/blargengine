@@ -52,6 +52,18 @@ export class TestGame extends AbstractGame {
       '..d..',
       '..dd.'
     ],
+    large: [
+      '..d.bbbbbb',
+      '.d.d.....a',
+      '..d......a',
+      '..d.......',
+      '..dd......',
+      '..dd......',
+      '..dd......',
+      '..ddaaaa..',
+      '..dd..aaa.',
+      '..dd....aa',
+    ],
     pushable: [
       'abbca',
       'bbbbb',
@@ -111,19 +123,33 @@ export class TestGame extends AbstractGame {
       blocking: this.createEntityCollection('walls'),
       pushable: this.createEntityCollection('pushable')
     });
+    block.setEventHandlers({
+      onClick: () => {console.log('onClick'); return true},
+      onDestroy: () => {console.log('onDestroy'); return true},
+      onKey: () => {console.log('onKey'); return true},
+      onMove: () => {console.log('onMove'); return true},
+      onPush: () => {console.log('onPush'); return true},
+      onStickAlong: () => {console.log('onStickAlong'); return true},
+    });
+
+    const large = new EntityTemplate(this.sprites.large, 'large', this.gameprops.tileSize);
+    large.setPhysics({
+      blocking: this.createEntityCollection('walls'),
+      // pushable: this.createEntityCollection('pushable')
+    });
 
     defineLevel(new Level([
       { id: 'B', layer: 'bg', entity: new EntityTemplate(this.sprites.floor), default: true },
       { id: 'A', layer: 'walls', entity: new EntityTemplate(this.sprites.wall) },
-      { id: 'C', layer: 'fg', entity: player },
-      { id: 'P', layer: 'pushable', entity: block },
       { id: 'K', layer: 'collectible', entity: new EntityTemplate(this.sprites.key1) },
+      { id: 'C', layer: 'fg', entity: player },
+      { id: 'P', layer: 'pushable', entity: large },
     ], [
       'AAAAAAAA',
+      'A...P...',
       'A.......',
-      'A......K',
-      'A..P....',
-      'A.P...AA',
+      'A.......',
+      'A.....AA',
       'A...C.AA',
       'AAAAAAAA',
     ]))

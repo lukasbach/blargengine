@@ -51,6 +51,9 @@ export class FloatingRender {
         break;
     }
 
+    x = Math.floor(x);
+    y = Math.floor(y);
+
     renderable.render(renderContext.withOffset(new Position(0, 0, x, y)));
 
     return { x, y, width: right, height: bottom };

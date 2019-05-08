@@ -56,6 +56,16 @@ export class Position {
     return pos;
   }
 
+  public static fromDifference(...positions: (ISerializedPosition | Position)[]): Position {
+    const pos = Position.fromPosition(positions[0]).clone();
+
+    for (let i = 1; i < positions.length; i++) {
+      pos.subtract(positions[i]);
+    }
+
+    return pos;
+  }
+
   public getPushPosition(): Position {
     if (this.x !== 0) {
       return new Position(this.x < 0 ? -1 : 1, 0);
@@ -76,6 +86,14 @@ export class Position {
     this._y += p.y;
     this._xOffset += p.xOffset;
     this._yOffset += p.yOffset;
+  }
+
+  public subtract(pos: Position | ISerializedPosition) {
+    const p = Position.fromPosition(pos);
+    this._x -= p.x;
+    this._y -= p.y;
+    this._xOffset -= p.xOffset;
+    this._yOffset -= p.yOffset;
   }
 
   public equals(pos: Position | ISerializedPosition) {
