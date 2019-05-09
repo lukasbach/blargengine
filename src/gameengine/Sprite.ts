@@ -1,9 +1,9 @@
 import {RenderContext} from "./RenderContext";
 import {getColorCode} from "./utils";
 import {Color, ISerializedPosition, ISpriteData} from "./types";
-import {RenderableAt} from "./Renderable";
+import {ComposedRenderable} from "./Renderable";
 
-export class Sprite implements RenderableAt {
+export class Sprite implements ComposedRenderable {
   private readonly data: ISpriteData;
   private readonly colors: Color[];
   private readonly lines: string[];
@@ -33,12 +33,12 @@ export class Sprite implements RenderableAt {
     return getColorCode(colors[char.charCodeAt(0) - 97] || colors[parseInt(char)]);
   }
 
-  public renderAt(renderContext: RenderContext, position: ISerializedPosition): void {
+  public render(renderContext: RenderContext): void {
     this.data.lines.forEach((line, lineIndex) => {
       line.cells.forEach((cell, cellIndex) => {
         renderContext.drawPixel({
-          x: position.x,
-          y: position.y,
+          x: 0,
+          y: 0,
           xOffset: cellIndex,
           yOffset: lineIndex
         }, cell.color);
@@ -46,8 +46,8 @@ export class Sprite implements RenderableAt {
     })
   }
 
-  public getSubSprites(tileSize: number) {
-    const output: Array<{ x: number, y: number, sprite: Sprite }> = [];
+  public getPieces(tileSize: number) {
+    const output: Array<{ x: number, y: number, sprite: ComposedRenderable }> = [];
 
     for (let y = 0; y < this.data.lines.length / tileSize; y++) {
       for (let x = 0; x < this.data.lines[x].cells.length / tileSize; x++) {

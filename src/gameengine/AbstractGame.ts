@@ -57,6 +57,7 @@ export abstract class AbstractGame implements ICanReceiveInput {
   public backgroundColor: string = this.colorPalette.getBackgroundColor().color;
 
   protected abstract spriteDefinitions: { [key: string]: string[] };
+  protected abstract animationDefinitions: { [key: string]: { time?: number; sprites: Array<string[] | string> } };
   protected sprites: { [key: string]: Sprite };
 
   defineLevels(defineLevel: LevelDefine) {}

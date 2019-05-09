@@ -31,6 +31,7 @@ export abstract class IMovementPhysics {
 
   public canMoveRelative() {
     if (!(!this.movingEntity.eventHandlers || this.canMoveHandlerImpl(this.movingEntity.eventHandlers))) {
+      console.log('Move handler revoked')
       return false;
     }
 
@@ -139,8 +140,11 @@ export class MovementStickablePhysics extends IMovementPhysics {
   protected canMoveRelativeImpl(): boolean {
     let success = true;
 
+    console.log(this.entitiesAffectedByPhysics, this.entitiesAffectedByPhysics.getAll());
+
     this.entitiesAffectedByPhysics.forEach(item => {
       success = success && item.canMoveRelative(this.relativePosition.getPushPosition(), this.movingEntity, MoveReason.Stick);
+      console.log(success, item);
     });
 
     return success;
@@ -150,7 +154,8 @@ export class MovementStickablePhysics extends IMovementPhysics {
     return physics.sticking && physics.sticking.filter(e => {
       const bySource = !!this.sourceEntity && this.sourceEntity.isAt(e.getPosition());
       const isAdjacent = e.getPosition().isAdjacent(this.oldPosition);
-      return bySource && isAdjacent;
+      // console.log(!bySource, isAdjacent, e.getPosition().toString());
+      return !bySource && isAdjacent;
     });
   }
 

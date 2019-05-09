@@ -24,6 +24,12 @@ export class EntityCollection {
     }
   }
 
+  public getAll() {
+    const col: Entity[] = [];
+    this.forEach(e => col.push(e));
+    return col;
+  }
+
   public forEach(handler: (item: Entity, index: number) => void): void {
     let i = 0;
 

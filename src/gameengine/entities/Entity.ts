@@ -8,7 +8,7 @@ import {
   ITimeTravelable,
   MoveReason
 } from "../types";
-import {Renderable, RenderableAt} from "../Renderable";
+import {Renderable} from "../Renderable";
 import {Layer} from "../Layer";
 import {Position} from "../Position";
 import {TimeBox} from "../TimeBox";
@@ -84,33 +84,18 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   }
 
   public canMoveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
-
-    // const canMove =
-    //      reason === MoveReason.Internal
-    //   || reason === MoveReason.Composed
-    //   || !this.eventHandlers
-    //   || !this.eventHandlers.onMove
-    //   || this.eventHandlers.onMove(this.pos, Position.fromSum(this.pos, position), reason || MoveReason.Other);
-    // if (!canMove) return false;
-    /*if (reason === MoveReason.Internal || reason === MoveReason.Composed) {
-      return false;
-    }*/
-
     return this.getMovementPhysics(Position.fromPosition(position), sourceEntity, reason)
-      .map(ph => ph.canMoveRelative())
-      .map(c => {console.log(c); return c;})
+      .map(ph => {const can = ph.canMoveRelative();/*console.log(ph, can);*/return can;})
       .reduce((a, b) => a && b, true);
   }
 
   public moveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
     if (this.canMoveRelative(position, sourceEntity, reason)) {
-      console.log(reason);
-
       if (this.eventHandlers && this.eventHandlers.onMove && reason === MoveReason.UserInput) {
         this.eventHandlers.onMove(this.pos, Position.fromSum(this.pos, position), reason || MoveReason.Other);
       }
 
-      if (reason !== MoveReason.Internal && reason !== MoveReason.Composed) {
+      if (reason !== MoveReason.Internal/* && reason !== MoveReason.Composed*/) {
         this.getMovementPhysics(Position.fromPosition(position), sourceEntity, reason)
           .forEach(ph => ph.applyMoveRelativePhysics());
       }
@@ -121,34 +106,10 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     } else {
       return false;
     }
-
-    /*let newPosition = Position.fromSum(this.pos, position);
-    let canMove;
-
-    canMove = reason === MoveReason.Internal || reason === MoveReason.Composed || !this.eventHandlers || !this.eventHandlers.onMove
-      || this.eventHandlers.onMove(this.pos, newPosition, reason || MoveReason.Other);
-    if (!canMove) return false;
-
-    [canMove, newPosition] = this.moveRespectBlockingPhysics(this.pos, newPosition);
-    if (!canMove) return false;
-
-    [canMove, newPosition] = this.moveRespectStickablePhysics(this.pos, newPosition, Position.fromPosition(position), sourceEntity);
-    if (!canMove) return false;
-
-    [canMove, newPosition] = this.moveRespectPushablePhysics(this.pos, newPosition, Position.fromPosition(position));
-    if (!canMove) return false;
-
-    [canMove, newPosition] = this.moveRespectDestroyablePhysics(newPosition);
-    if (!canMove) return false;
-
-    this.pos = newPosition;
-    return true;*/
   }
 
   public render(renderContext: RenderContext): void {
-    if (!this.pos) {
-      throw Error('Cant render unpositioned entity.');
-    }
+    renderContext.drawBlockCoords(this.pos);
     this.getAnimation().render.renderAt(renderContext, this.pos);
   }
 
@@ -202,87 +163,6 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
       return ani;
     }
   }
-
-  /*
-
-  private moveRespectBlockingPhysics(oldPosition: Position, newPosition: Position): [boolean, Position] {
-    if (this.physics && this.physics.blocking) {
-      const canMove = this.physics.blocking.map(item => !item.isAt(newPosition)).reduce((a, b) => a && b, true);
-      return [canMove, canMove ? newPosition : oldPosition];
-    }
-    return [true, newPosition];
-  }
-
-  private moveRespectPushablePhysics(oldPosition: Position, newPosition: Position, relativePosition: Position): [boolean, Position] {
-    if (this.physics && this.physics.pushable) {
-
-      let success = true;
-
-      this.physics.pushable.forEach(item => {
-        console.log(item);
-        if (item.isAt(newPosition)) {
-          success = success && (!item.eventHandlers || !item.eventHandlers.onPush
-             || item.eventHandlers.onPush(newPosition, Position.fromSum(newPosition, relativePosition.getPushPosition())));
-          success = success && item.moveRelative(relativePosition.getPushPosition(), this, MoveReason.Push);
-        }
-      });
-
-      return [success, success ? newPosition : oldPosition];
-    }
-    return [true, newPosition];
-  }
-
-  private moveRespectStickablePhysics(
-    oldPosition: Position,
-    newPosition: Position,
-    relativePosition: Position,
-    sourceEntity?: Entity
-  ): [boolean, Position] {
-    if (this.physics && this.physics.sticking) {
-
-      let success = true;
-
-      this.physics.sticking.forEach(item => {
-        if (item.getPosition().isAdjacent(oldPosition) && (!sourceEntity || !sourceEntity.isAt(item.getPosition()))) {
-          success = success && (!item.eventHandlers || !item.eventHandlers.onStickAlong
-            || item.eventHandlers.onStickAlong(newPosition, Position.fromSum(newPosition, relativePosition.getPushPosition())));
-          success = success && item.moveRelative(relativePosition.getPushPosition(), this, MoveReason.Stick);
-        }
-      });
-
-      return [success, success ? newPosition : oldPosition];
-    }
-    return [true, newPosition];
-  }
-
-  private moveRespectDestroyablePhysics(
-    newPosition: Position,
-  ): [boolean, Position] {
-    if (this.physics && this.physics.destroying) {
-      this.physics.destroying.forEach(item => {
-        if (item.isAt(newPosition)) {
-          let shouldDestroy = true;
-          console.log('destroy self!')
-
-          if (this.eventHandlers && this.eventHandlers.onDestroy) {
-            shouldDestroy = this.eventHandlers.onDestroy();
-          }
-          return [true, newPosition];
-        }
-      });
-    }
-    return [true, newPosition];
-  }
-
-  private moveRespectEnterPhysics(newPosition: Position) {
-    if (this.physics && this.physics.handlesEntering && this.eventHandlers && this.eventHandlers.onEnter) {
-      this.physics.handlesEntering.forEach(item => {
-        if (item.isAt(newPosition)) {
-          this.eventHandlers!.onEnter!(item);
-        }
-      });
-    }
-  }*/
 
   private getMovementPhysics(position: Position, sourceEntity?: Entity, reason?: MoveReason): IMovementPhysics[] {
     return [

@@ -9,6 +9,7 @@ export interface RenderContext {
   withOffset(offset: ISerializedPosition | Position): RenderContext;
   drawPixel(position: ISerializedPosition, color: string): void;
   drawBox(position: ISerializedPosition, color: string, width: number, height: number): void;
+  drawBlockCoords(position: ISerializedPosition | Position): void;
 }
 
 export interface IMeasurements {
@@ -69,7 +70,7 @@ export class CanvasRenderContext implements RenderContext {
       pixelSize,
       pixelSize,
     );*/
-    this.drawBox(position, color, 1, 1);
+    this.drawBox(position, color, 1, 1)
   }
 
   drawBox(position: ISerializedPosition, color: string, width: number, height: number) {
@@ -81,6 +82,17 @@ export class CanvasRenderContext implements RenderContext {
       (this.offset.y + position.y) * tileSize * pixelSize + ((this.offset.yOffset || 0) + (position.yOffset || 0)) * pixelSize,
       pixelSize * width,
       pixelSize * height,
+    );
+  }
+
+  drawBlockCoords(position: ISerializedPosition | Position): void {
+    const { pixelSize, tileSize } = this.props;
+    this.canvas.font = "12px Arial";
+    this.canvas.fillStyle = '#000000';
+    this.canvas.fillText(
+      `${position.x},${position.y}`,
+      (this.offset.x + position.x) * tileSize * pixelSize + ((this.offset.xOffset || 0) + (position.xOffset || 0)) * pixelSize,
+      (this.offset.y + position.y) * tileSize * pixelSize + ((this.offset.yOffset || 0) + (position.yOffset || 0)) * pixelSize,
     );
   }
 }
@@ -168,4 +180,6 @@ export class MeasureRenderContext implements RenderContext {
       left: this.measuredLeft
     };
   }
+
+  drawBlockCoords(position: ISerializedPosition | Position): void {}
 }

@@ -41,7 +41,7 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
     this.state = {};
     this.timeBox = new TimeBox();
 
-    this.pieces = idle.getSubSprites(tileSize).map(piece => {
+    this.pieces = idle.getPieces(tileSize).map(piece => {
       const entity = new Entity(piece.sprite, layer, piece.x + x, piece.y + y, alias);
 
       return {
@@ -97,13 +97,14 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
 
       piece.entity.setEventHandlers({
         canMove: (from, to, reason) => {
-          if (reason !== MoveReason.Push) return false;
+          if (reason === MoveReason.Composed) return true;
+          console.log("on check move piece", reason);
 
           const relMovement = Position.fromDifference(to, from);
           let success = true;
 
           if (this.eventHandlers && this.eventHandlers.canMove) {
-            // success = success && this.eventHandlers.canMove(from, to, MoveReason.Composed);
+            success = success && this.eventHandlers.canMove(from, to, reason);
           }
 
           if (!success) return false;
@@ -115,14 +116,14 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
           return success;
         },
         onMove: (from, to, reason) => {
-          if (reason !== MoveReason.Push) return;
+          if (reason === MoveReason.Composed) return;
           console.log("on move piece");
 
           const relMovement = Position.fromDifference(to, from);
           let success = true;
 
           if (this.eventHandlers && this.eventHandlers.onMove) {
-            // this.eventHandlers.onMove(from, to, MoveReason.Composed);
+            this.eventHandlers.onMove(from, to, reason);
           }
 
           for (let otherPiece of this.pieces) {

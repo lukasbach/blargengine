@@ -64,6 +64,30 @@ export class TestGame extends AbstractGame {
       '..dd..aaa.',
       '..dd....aa',
     ],
+    large2: [
+      '..d.bbbbbb',
+      '.dad.....a',
+      '..d......a',
+      '..d.......',
+      '..dd......',
+      '..dd......',
+      '..dd......',
+      '..ddaaaa..',
+      '..dd..aaa.',
+      '..dd.aa.aa',
+    ],
+    large3: [
+      '..d.bbbbbb',
+      '.d.d.....a',
+      '..d......a',
+      'a.d.....a.',
+      'a.dd....a.',
+      'a.dd....a.',
+      'a.dd......',
+      '..ddaaaa..',
+      '..dd..aaa.',
+      '..dd....aa',
+    ],
     pushable: [
       'abbca',
       'bbbbb',
@@ -71,7 +95,18 @@ export class TestGame extends AbstractGame {
       'aaaaa',
       'abbca'
     ],
-  }
+  };
+
+  animationDefinitions = {
+    large: {
+      time: 1,
+      sprites: [
+        this.spriteDefinitions.large,
+        this.spriteDefinitions.large2,
+        this.spriteDefinitions.large3,
+      ]
+    }
+  };
 
   defineKeyMapping(defineKey: KeyDefine) {
     defineKey('action', 'Action key', '', 'enter');
@@ -114,26 +149,34 @@ export class TestGame extends AbstractGame {
     const player = new EntityTemplate(this.sprites.player, 'player');
     player.setPhysics({
       blocking: this.createEntityCollection('walls'),
-      pushable: this.createEntityCollection('pushable'),
+      pushable: this.createEntityCollection('pushable', 'large'),
       destroying: this.createEntityCollection('collectible')
     });
 
     const block = new EntityTemplate(this.sprites.pushable);
     block.setPhysics({
       blocking: this.createEntityCollection('walls'),
-      pushable: this.createEntityCollection('pushable')
+      // pushable: this.createEntityCollection('pushable'),
+      pushable: this.createEntityCollection('large', 'pushable')
     });
     block.setEventHandlers({
       onClick: () => {console.log('onClick'); return true},
       onDestroy: () => {console.log('onDestroy'); return true},
       onKey: () => {console.log('onKey'); return true},
-      onMove: () => {console.log('onMove'); return true},
+      onMove: (...m) => {console.log('onMove', ...m); return true},
     });
 
     const large = new EntityTemplate(this.sprites.large, 'large', this.gameprops.tileSize);
     large.setPhysics({
       blocking: this.createEntityCollection('walls'),
+      pushable: this.createEntityCollection('pushable')
       // pushable: this.createEntityCollection('pushable')
+    });
+    large.setEventHandlers({
+      onClick: () => {console.log('onClick'); return true},
+      onDestroy: () => {console.log('onDestroy'); return true},
+      onKey: () => {console.log('onKey'); return true},
+      onMove: (...m) => {console.log('onMove', ...m); return true},
     });
 
     defineLevel(new Level([
@@ -141,13 +184,14 @@ export class TestGame extends AbstractGame {
       { id: 'A', layer: 'walls', entity: new EntityTemplate(this.sprites.wall) },
       { id: 'K', layer: 'collectible', entity: new EntityTemplate(this.sprites.key1) },
       { id: 'C', layer: 'fg', entity: player },
-      { id: 'P', layer: 'pushable', entity: large },
+      { id: 'P', layer: 'pushable', entity: block },
+      { id: 'L', layer: 'large', entity: large },
     ], [
       'AAAAAAAA',
-      'A...P...',
+      'A...L...',
       'A.......',
       'A.......',
-      'A.....AA',
+      'A.P.P.AA',
       'A...C.AA',
       'AAAAAAAA',
     ]))
