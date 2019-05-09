@@ -1,6 +1,6 @@
 import {IPlayerKeyboardEvent, IPlayerMouseClickEvent, KeyDefine, LevelDefine} from "./types";
 import {Sprite} from "./Sprite";
-import {EntityTemplate} from "./EntityTemplate";
+import {EntityTemplate} from "./entities/EntityTemplate";
 import {AbstractGame} from "./AbstractGame";
 import {Level} from "./Level";
 import {Box, UserInterface, Text} from "./userinterface/UserInterface";
@@ -128,8 +128,6 @@ export class TestGame extends AbstractGame {
       onDestroy: () => {console.log('onDestroy'); return true},
       onKey: () => {console.log('onKey'); return true},
       onMove: () => {console.log('onMove'); return true},
-      onPush: () => {console.log('onPush'); return true},
-      onStickAlong: () => {console.log('onStickAlong'); return true},
     });
 
     const large = new EntityTemplate(this.sprites.large, 'large', this.gameprops.tileSize);

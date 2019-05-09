@@ -1,11 +1,11 @@
-import {IEntityEventHandlers, IEntityPhysics, ITimeTravelable, MoveReason} from "./types";
-import {Renderable, RenderableAt} from "./Renderable";
-import {RenderContext} from "./RenderContext";
-import {Layer} from "./Layer";
-import {Position} from "./Position";
-import {TimeBox} from "./TimeBox";
+import {IEntityEventHandlers, IEntityPhysics, ITimeTravelable, MoveReason} from "../types";
+import {Renderable, RenderableAt} from "../Renderable";
+import {RenderContext} from "../RenderContext";
+import {Layer} from "../Layer";
+import {Position} from "../Position";
+import {TimeBox} from "../TimeBox";
 import {Entity} from "./Entity";
-import {Sprite} from "./Sprite";
+import {Sprite} from "../Sprite";
 
 interface IPieceInformation {
   entity: Entity;
@@ -96,19 +96,38 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
       }
 
       piece.entity.setEventHandlers({
-        onMove: (from, to, reason) => {
+        canMove: (from, to, reason) => {
+          if (reason !== MoveReason.Push) return false;
+
           const relMovement = Position.fromDifference(to, from);
           let success = true;
 
+          if (this.eventHandlers && this.eventHandlers.canMove) {
+            // success = success && this.eventHandlers.canMove(from, to, MoveReason.Composed);
+          }
+
+          if (!success) return false;
+
+          success = success && this.pieces
+            .map(p => p.entity.canMoveRelative(relMovement, piece.entity, MoveReason.Composed))
+            .reduce((a, b) => a && b, true);
+
+          return success;
+        },
+        onMove: (from, to, reason) => {
+          if (reason !== MoveReason.Push) return;
+          console.log("on move piece");
+
+          const relMovement = Position.fromDifference(to, from);
+          let success = true;
 
           if (this.eventHandlers && this.eventHandlers.onMove) {
-            success = success && this.eventHandlers.onMove(from, to, MoveReason.Composed);
+            // this.eventHandlers.onMove(from, to, MoveReason.Composed);
           }
 
           for (let otherPiece of this.pieces) {
             if (!otherPiece.relativePosition.equals(piece.relativePosition)) {
-              success = success && otherPiece.entity.moveRelative(relMovement, piece.entity, MoveReason.Composed);
-              console.log(otherPiece.entity)
+              otherPiece.entity.moveRelative(relMovement, piece.entity, MoveReason.Composed);
             }
           }
 

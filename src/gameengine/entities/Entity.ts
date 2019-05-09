@@ -1,4 +1,4 @@
-import {RenderContext} from "./RenderContext";
+import {RenderContext} from "../RenderContext";
 import {
   IEntityEventHandlers,
   IEntityPhysics,
@@ -7,11 +7,18 @@ import {
   ISerializedPosition,
   ITimeTravelable,
   MoveReason
-} from "./types";
-import {Renderable, RenderableAt} from "./Renderable";
-import {Layer} from "./Layer";
-import {Position} from "./Position";
-import {TimeBox} from "./TimeBox";
+} from "../types";
+import {Renderable, RenderableAt} from "../Renderable";
+import {Layer} from "../Layer";
+import {Position} from "../Position";
+import {TimeBox} from "../TimeBox";
+import {
+  IMovementPhysics,
+  MovementBlockingPhysics,
+  MovementDestroyingPhysics,
+  MovementPushablePhysics,
+  MovementStickablePhysics
+} from "./MovementPhysics";
 
 export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   public readonly alias?: string;
@@ -20,7 +27,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   private layer: Layer;
   private pos: Position;
   private animationState: string;
-  private physics?: IEntityPhysics;
+  public physics?: IEntityPhysics;
   public eventHandlers?: IEntityEventHandlers;
   private animations: Array<{
     name: string;
@@ -77,11 +84,45 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   }
 
   public canMoveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
-    return true; // TODO
+
+    // const canMove =
+    //      reason === MoveReason.Internal
+    //   || reason === MoveReason.Composed
+    //   || !this.eventHandlers
+    //   || !this.eventHandlers.onMove
+    //   || this.eventHandlers.onMove(this.pos, Position.fromSum(this.pos, position), reason || MoveReason.Other);
+    // if (!canMove) return false;
+    /*if (reason === MoveReason.Internal || reason === MoveReason.Composed) {
+      return false;
+    }*/
+
+    return this.getMovementPhysics(Position.fromPosition(position), sourceEntity, reason)
+      .map(ph => ph.canMoveRelative())
+      .map(c => {console.log(c); return c;})
+      .reduce((a, b) => a && b, true);
   }
 
   public moveRelative(position: ISerializedPosition, sourceEntity?: Entity, reason?: MoveReason): boolean {
-    let newPosition = Position.fromSum(this.pos, position);
+    if (this.canMoveRelative(position, sourceEntity, reason)) {
+      console.log(reason);
+
+      if (this.eventHandlers && this.eventHandlers.onMove && reason === MoveReason.UserInput) {
+        this.eventHandlers.onMove(this.pos, Position.fromSum(this.pos, position), reason || MoveReason.Other);
+      }
+
+      if (reason !== MoveReason.Internal && reason !== MoveReason.Composed) {
+        this.getMovementPhysics(Position.fromPosition(position), sourceEntity, reason)
+          .forEach(ph => ph.applyMoveRelativePhysics());
+      }
+
+      this.pos = Position.fromSum(this.pos, position);
+
+      return true;
+    } else {
+      return false;
+    }
+
+    /*let newPosition = Position.fromSum(this.pos, position);
     let canMove;
 
     canMove = reason === MoveReason.Internal || reason === MoveReason.Composed || !this.eventHandlers || !this.eventHandlers.onMove
@@ -101,7 +142,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     if (!canMove) return false;
 
     this.pos = newPosition;
-    return true;
+    return true;*/
   }
 
   public render(renderContext: RenderContext): void {
@@ -161,6 +202,8 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
       return ani;
     }
   }
+
+  /*
 
   private moveRespectBlockingPhysics(oldPosition: Position, newPosition: Position): [boolean, Position] {
     if (this.physics && this.physics.blocking) {
@@ -239,7 +282,15 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
         }
       });
     }
+  }*/
 
+  private getMovementPhysics(position: Position, sourceEntity?: Entity, reason?: MoveReason): IMovementPhysics[] {
+    return [
+      new MovementBlockingPhysics(this, position, sourceEntity, reason),
+      new MovementPushablePhysics(this, position, sourceEntity, reason),
+      new MovementStickablePhysics(this, position, sourceEntity, reason),
+      new MovementDestroyingPhysics(this, position, sourceEntity, reason),
+    ];
   }
 
   goBack(): void {

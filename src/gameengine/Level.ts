@@ -1,5 +1,5 @@
 import {Board} from "./Board";
-import {EntityTemplate} from "./EntityTemplate";
+import {EntityTemplate} from "./entities/EntityTemplate";
 import {IAlias, ITimeTravelable} from "./types";
 
 export class Level {

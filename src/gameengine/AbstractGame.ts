@@ -1,5 +1,5 @@
 import {GameEngine} from "./GameEngine";
-import {Entity} from "./Entity";
+import {Entity} from "./entities/Entity";
 import {Board} from "./Board";
 import {
   IAlias,
@@ -11,7 +11,7 @@ import {
   LevelDefine
 } from "./types";
 import {Layer} from "./Layer";
-import {EntityCollection} from "./EntityCollection";
+import {EntityCollection} from "./entities/EntityCollection";
 import {UserInterface} from "./userinterface/UserInterface";
 import {ColorPalette} from "./color/ColorPalette";
 import {defaultColorPalettes} from "./color/defaultPalettes";
@@ -90,7 +90,7 @@ export abstract class AbstractGame implements ICanReceiveInput {
       return entities;
     };
 
-    return new EntityCollection(resolveAlias, ...items);
+    return new EntityCollection(resolveAlias, e => true, ...items);
   }
 
   public createAlias(name: string, refersTo: Entity | Layer) {

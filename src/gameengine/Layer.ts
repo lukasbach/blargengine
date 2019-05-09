@@ -1,4 +1,4 @@
-import {Entity} from "./Entity";
+import {Entity} from "./entities/Entity";
 import {RenderContext} from "./RenderContext";
 import {ISerializedPosition, ITimeTravelable} from "./types";
 import {Renderable} from "./Renderable";

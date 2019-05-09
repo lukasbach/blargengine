@@ -1,9 +1,9 @@
 import {Entity} from "./Entity";
-import {Layer} from "./Layer";
-import {IEntityEventHandlers, IEntityPhysics, ISerializedPosition} from "./types";
-import {RenderableAt} from "./Renderable";
-import {Sprite} from "./Sprite";
-import {Position} from "./Position";
+import {Layer} from "../Layer";
+import {IEntityEventHandlers, IEntityPhysics, ISerializedPosition} from "../types";
+import {RenderableAt} from "../Renderable";
+import {Sprite} from "../Sprite";
+import {Position} from "../Position";
 import {ComposedEntity} from "./ComposedEntity";
 
 export class EntityTemplate<STATE = {}> {

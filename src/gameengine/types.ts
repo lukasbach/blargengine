@@ -1,7 +1,7 @@
 import {Level} from "./Level";
 import {Layer} from "./Layer";
-import {Entity} from "./Entity";
-import {EntityCollection} from "./EntityCollection";
+import {Entity} from "./entities/Entity";
+import {EntityCollection} from "./entities/EntityCollection";
 import {Position} from "./Position";
 
 export interface IPlayerMouseClickEvent {
@@ -58,18 +58,17 @@ export interface IEntityPhysics {
 
 // export type MoveReason = 'userinput' | 'push' | 'stick' | 'internal' | 'other' | 'composed';
 export enum MoveReason {
-  UserInput,
-  Push,
-  Stick,
-  Composed,
-  Internal,
-  Other
+  UserInput = 'userinput',
+  Push = 'push',
+  Stick = 'stick',
+  Composed = 'composed',
+  Internal = 'internal',
+  Other = 'other'
 }
 
 export interface IEntityEventHandlers {
-  onMove?: (from: Position, to: Position, reason: MoveReason) => boolean;
-  onPush?: (from: Position, to: Position) => boolean;
-  onStickAlong?: (from: Position, to: Position) => boolean;
+  canMove?: (from: Position, to: Position, reason: MoveReason) => boolean;
+  onMove?: (from: Position, to: Position, reason: MoveReason) => void;
   onDestroy?: () => boolean;
   onKey?: (key: string) => void;
   onClick?: () => void;
