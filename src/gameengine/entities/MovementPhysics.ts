@@ -198,3 +198,27 @@ export class MovementDestroyingPhysics extends IMovementPhysics {
   }
 
 }
+
+export class MovementEnterablePhysics extends IMovementPhysics {
+  protected applyMoveRelativePhysicsImpl(): void {
+  }
+
+  protected canMoveRelativeImpl(): boolean {
+    return true;
+  }
+
+  protected getAffectedEntities(physics: IEntityPhysics): EntityCollection | undefined {
+    return physics.handlesEntering && physics.handlesEntering.filter(e => e.isAt(this.newPosition));
+  }
+
+  protected canMoveHandlerImpl(eventHandlers: IEntityEventHandlers): boolean {
+    return true;
+  }
+
+  protected doMoveHandlerImpl(eventHandlers: IEntityEventHandlers) {
+    if (eventHandlers.onEnter) {
+      eventHandlers.onEnter(this.entitiesAffectedByPhysics.getAll()[0]);
+    }
+  }
+
+}

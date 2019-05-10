@@ -16,6 +16,10 @@ import {UserInterface} from "./userinterface/UserInterface";
 import {ColorPalette} from "./color/ColorPalette";
 import {defaultColorPalettes} from "./color/defaultPalettes";
 import {Sprite} from "./Sprite";
+import {ComposedRenderable} from "./Renderable";
+import {SpriteAnimation} from "./SpriteAnimation";
+import {EntityTemplate} from "./entities/EntityTemplate";
+import {Position} from "./Position";
 
 export interface AbstractGameConstructor {
   new (engine: GameEngine): AbstractGame;
@@ -51,14 +55,14 @@ export abstract class AbstractGame implements ICanReceiveInput {
     pixelSize: 8
   };
 
-  public state: object = {};
+  public state: any = {};
   protected defaultColorPalettes = defaultColorPalettes;
   protected colorPalette: ColorPalette<any> = defaultColorPalettes['pollen8'];
   public backgroundColor: string = this.colorPalette.getBackgroundColor().color;
 
   protected abstract spriteDefinitions: { [key: string]: string[] };
   protected abstract animationDefinitions: { [key: string]: { time?: number; sprites: Array<string[] | string> } };
-  protected sprites: { [key: string]: Sprite };
+  protected sprites: { [key: string]: ComposedRenderable };
 
   defineLevels(defineLevel: LevelDefine) {}
   defineKeyMapping(defineKey: KeyDefine) {}
@@ -72,6 +76,10 @@ export abstract class AbstractGame implements ICanReceiveInput {
 
   renderBottomLegend(): UserInterface | undefined {
     return undefined;
+  }
+
+  public spawnEntity(e: EntityTemplate, position: Position, layer: string) {
+    const entity = e.createEntity(position, this.resolveLayerAlias(layer));
   }
 
   public createEntityCollection(...items: (string | Layer | Entity)[]) {
@@ -132,6 +140,21 @@ export abstract class AbstractGame implements ICanReceiveInput {
     this.sprites = {};
     for (let key of Object.keys(this.spriteDefinitions)) {
       this.sprites[key] = new Sprite(this.colorPalette.getColors(), this.spriteDefinitions[key]);
+    }
+    for (let key of Object.keys(this.animationDefinitions)) {
+      const ani = this.animationDefinitions[key];
+      this.sprites[key] = new SpriteAnimation(
+        ani.sprites.map(sprite => {
+          if (sprite instanceof Array) {
+            return new Sprite(this.colorPalette.getColors(), sprite);
+          } else if (typeof sprite === "string") {
+            return new Sprite(this.colorPalette.getColors(), this.spriteDefinitions[sprite]);
+          } else {
+            throw Error('');
+          }
+        }),
+        ani.time
+      );
     }
   }
 

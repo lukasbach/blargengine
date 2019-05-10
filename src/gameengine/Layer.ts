@@ -16,6 +16,10 @@ export class Layer implements ITimeTravelable, Renderable {
     }
   }
 
+  removeEntity(e: Entity) {
+    this.entities = this.entities.filter(e_ => e_ !== e);
+  }
+
   getAt(p: ISerializedPosition) {
     return this.entities.find(e => e.isAt(p));
   }

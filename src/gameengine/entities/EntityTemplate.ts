@@ -1,23 +1,24 @@
 import {Entity} from "./Entity";
 import {Layer} from "../Layer";
-import {IEntityEventHandlers, IEntityPhysics, ISerializedPosition} from "../types";
-import {RenderableAt} from "../Renderable";
+import {IEntityEventHandlers, IEntityPhysics} from "../types";
 import {Sprite} from "../Sprite";
 import {Position} from "../Position";
 import {ComposedEntity} from "./ComposedEntity";
+import {ComposedRenderable} from "../Renderable";
 
 export class EntityTemplate<STATE = {}> {
   private animations: Array<{
     name: string;
-    render: Sprite;
+    render: ComposedRenderable;
   }>;
   public alias?: string;
   public state: Partial<STATE>;
   private physics?: IEntityPhysics;
   private eventHandlers?: IEntityEventHandlers;
   private tileSize?: number;
+  private entityInstances: Array<Entity | ComposedEntity>;
 
-  constructor(idle: Sprite, alias?: string, tileSize?: number) {
+  constructor(idle: ComposedRenderable, alias?: string, tileSize?: number) {
     this.animations = [
       {
         name: 'idle',
@@ -27,6 +28,7 @@ export class EntityTemplate<STATE = {}> {
     this.alias = alias;
     this.state = {};
     this.tileSize = tileSize;
+    this.entityInstances = [];
   }
 
   public addAnimation(name: string, render: Sprite) {
@@ -43,7 +45,29 @@ export class EntityTemplate<STATE = {}> {
     return this;
   }
 
-  public createEntity(pos: ISerializedPosition, layer: Layer) {
+  public getInstances() {
+    return this.entityInstances;
+  }
+
+  public hasInstances() {
+    return this.getInstances().length > 0;
+  }
+
+  public getInstance() {
+    const i = this.entityInstances[0];
+
+    if (!i) {
+      throw Error('No instances!');
+    } else {
+      return i;
+    }
+  }
+
+  public doOnEntity(handler: (e: Entity | ComposedEntity) => void) {
+    this.entityInstances.forEach(e => handler(e));
+  }
+
+  public createEntity(pos: Position, layer: Layer) {
     if (this.tileSize) {
       // return this.composeEntities(pos, layer);
     }
@@ -89,48 +113,8 @@ export class EntityTemplate<STATE = {}> {
       layer.addEntity(clone);
     }
 
+    this.entityInstances.push(clone);
+
     return clone;
-  }
-
-  private composeEntities(pos: ISerializedPosition, layer: Layer) {
-    const idle = this.animations.find(a => a.name === 'idle')!.render;
-    const idleSubSprites = idle.getSubSprites(this.tileSize!);
-
-    console.log(idleSubSprites);
-
-    const pieces = idleSubSprites.map((subSprite, idx) => {
-      const isMasterEntity = idx === 0;
-
-      const entity = new Entity(
-        subSprite.sprite,
-        layer,
-        pos.x + subSprite.x,
-        pos.y + subSprite.y,
-        this.alias
-      );
-
-
-      // TODO animations
-
-      entity.setEventHandlers({
-        ...(this.eventHandlers || {}),
-        onMove: (from, to) => {
-
-          const relative = Position.fromDifference(to, from);
-          pieces.filter((e, i) => i !== idx).forEach(p => p.moveRelative(relative, entity));
-          return true;
-        }
-      });
-
-      if (this.physics) {
-        entity.setPhysics(this.physics);
-      }
-
-      return entity;
-    });
-
-    pieces.slice(1).forEach(p => layer.addEntity(p));
-
-    return pieces[0];
   }
 }

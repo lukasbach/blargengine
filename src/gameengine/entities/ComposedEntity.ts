@@ -1,11 +1,10 @@
 import {IEntityEventHandlers, IEntityPhysics, ITimeTravelable, MoveReason} from "../types";
-import {Renderable, RenderableAt} from "../Renderable";
+import {ComposedRenderable, Renderable} from "../Renderable";
 import {RenderContext} from "../RenderContext";
 import {Layer} from "../Layer";
 import {Position} from "../Position";
 import {TimeBox} from "../TimeBox";
 import {Entity} from "./Entity";
-import {Sprite} from "../Sprite";
 
 interface IPieceInformation {
   entity: Entity;
@@ -22,13 +21,13 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
   public eventHandlers?: IEntityEventHandlers;
   private animations: Array<{
     name: string;
-    render: RenderableAt;
+    render: Renderable;
   }>;
   private timeBox: TimeBox<{
     state: Partial<STATE>;
   }>;
 
-  constructor(idle: Sprite, layer: Layer, x: number, y: number, tileSize: number, alias?: string) {
+  constructor(idle: ComposedRenderable, layer: Layer, x: number, y: number, tileSize: number, alias?: string) {
     this.animations = [
       {
         name: 'idle',
@@ -77,7 +76,7 @@ export class ComposedEntity<STATE = {}> implements ITimeTravelable, Renderable {
     return this;
   }
 
-  public addAnimation(name: string, render: RenderableAt) {
+  public addAnimation(name: string, render: Renderable) {
     this.animations.push({ name, render });
   }
 

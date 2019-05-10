@@ -100,6 +100,7 @@ export class GameEngine {
 
     this.initializeLevel();
     this.redrawScene();
+    setInterval(() => this.redrawScene(), 1000 / 20)
   }
 
   private initializeLevel() {
@@ -164,10 +165,10 @@ export class GameEngine {
   }
 
   private checkNextTickFlag() {
-    if (this.game.nextTickFlag) {
-      this.nextTick();
-      this.game.nextTickFlag = false;
-    }
+    // if (this.game.nextTickFlag) {
+    //   this.nextTick();
+    //   this.game.nextTickFlag = false;
+    // }
   }
 
   private redrawScene() {

@@ -3,7 +3,9 @@ import {ComposedRenderable} from "./Renderable";
 
 export class SpriteAnimation implements ComposedRenderable {
   private frames: ComposedRenderable[];
-  private timePerFrame: number = 5;
+  private timePerFrame = 50;
+  private frameCounter = 0;
+  private frameId = 0;
 
   constructor(frames: ComposedRenderable[], timePerFrame: number = 5) {
     this.frames = frames;
@@ -11,6 +13,16 @@ export class SpriteAnimation implements ComposedRenderable {
   }
 
   public render(renderContext: RenderContext): void {
+    if (this.frameCounter < this.timePerFrame) {
+      this.frameCounter++;
+    } else {
+      this.frameCounter = 0;
+      this.frameId = (this.frameId + 1) % this.frames.length;
+    }
+
+    if (this.frameId < this.frames.length) {
+      this.frames[this.frameId].render(renderContext);
+    }
   }
 
   public addFrame(sprite: ComposedRenderable) {
@@ -29,8 +41,8 @@ export class SpriteAnimation implements ComposedRenderable {
     }));
 
     piecedFrames.forEach((piecedFrame, i) => {
-      piecedFrame.forEach(framePiece => {
-        output[i].sprite.addFrame(framePiece.sprite);
+      piecedFrame.forEach((framePiece, j) => {
+        output[j].sprite.addFrame(framePiece.sprite);
       })
     });
 

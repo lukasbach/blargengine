@@ -15,7 +15,7 @@ import {TimeBox} from "../TimeBox";
 import {
   IMovementPhysics,
   MovementBlockingPhysics,
-  MovementDestroyingPhysics,
+  MovementDestroyingPhysics, MovementEnterablePhysics,
   MovementPushablePhysics,
   MovementStickablePhysics
 } from "./MovementPhysics";
@@ -31,7 +31,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   public eventHandlers?: IEntityEventHandlers;
   private animations: Array<{
     name: string;
-    render: RenderableAt;
+    render: Renderable;
   }>;
   private timeBox: TimeBox<{
     state: Partial<STATE>,
@@ -39,7 +39,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     animationState: string;
   }>;
 
-  constructor(idle: RenderableAt, layer: Layer, x: number, y: number, alias?: string) {
+  constructor(idle: Renderable, layer: Layer, x: number, y: number, alias?: string) {
     this.animations = [
       {
         name: 'idle',
@@ -55,7 +55,11 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
     this.timeBox = new TimeBox();
   }
 
-  public addAnimation(name: string, render: RenderableAt) {
+  public destroy() {
+    this.layer.removeEntity(this);
+  }
+
+  public addAnimation(name: string, render: Renderable) {
     this.animations.push({ name, render });
   }
 
@@ -109,8 +113,8 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
   }
 
   public render(renderContext: RenderContext): void {
-    renderContext.drawBlockCoords(this.pos);
-    this.getAnimation().render.renderAt(renderContext, this.pos);
+    // renderContext.drawBlockCoords(this.pos);
+    this.getAnimation().render.render(renderContext.withOffset(this.pos));
   }
 
   public clone(to?: ISerializedPosition) {
@@ -170,6 +174,7 @@ export class Entity<STATE = {}> implements ITimeTravelable, Renderable {
       new MovementPushablePhysics(this, position, sourceEntity, reason),
       new MovementStickablePhysics(this, position, sourceEntity, reason),
       new MovementDestroyingPhysics(this, position, sourceEntity, reason),
+      new MovementEnterablePhysics(this, position, sourceEntity, reason)
     ];
   }
 

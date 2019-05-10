@@ -9,7 +9,6 @@ export class Sprite implements ComposedRenderable {
   private readonly lines: string[];
 
   constructor(colors: Color[], lines: string[]) {
-    console.log(lines)
     this.data = {
       lines: lines.map(l => ({
         cells: l.split('').map(c => ({

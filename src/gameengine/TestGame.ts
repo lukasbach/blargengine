@@ -98,8 +98,8 @@ export class TestGame extends AbstractGame {
   };
 
   animationDefinitions = {
-    large: {
-      time: 1,
+    largeAni: {
+      time: 15,
       sprites: [
         this.spriteDefinitions.large,
         this.spriteDefinitions.large2,
@@ -166,7 +166,7 @@ export class TestGame extends AbstractGame {
       onMove: (...m) => {console.log('onMove', ...m); return true},
     });
 
-    const large = new EntityTemplate(this.sprites.large, 'large', this.gameprops.tileSize);
+    const large = new EntityTemplate(this.sprites.largeAni, 'large', this.gameprops.tileSize);
     large.setPhysics({
       blocking: this.createEntityCollection('walls'),
       pushable: this.createEntityCollection('pushable')

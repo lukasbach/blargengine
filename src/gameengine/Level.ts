@@ -1,6 +1,7 @@
 import {Board} from "./Board";
 import {EntityTemplate} from "./entities/EntityTemplate";
 import {IAlias, ITimeTravelable} from "./types";
+import {Position} from "./Position";
 
 export class Level {
   private readonly legend: Array<{ id: string, entity: EntityTemplate, layer: string, default?: boolean }>;
@@ -42,7 +43,7 @@ export class Level {
           }
 
           const layer = board.getLayer(legendEntry.layer);
-          legendEntry.entity.createEntity({ x, y }, layer);
+          legendEntry.entity.createEntity(new Position(x, y), layer);
         }
 
         x++;
@@ -58,7 +59,7 @@ export class Level {
       const defaultLayer = board.getLayer(defaultItem.layer);
       for (let i = 0; i < x; i++) {
         for (let j = 0; j < y; j++) {
-          defaultItem.entity.createEntity({ x: i, y: j }, defaultLayer);
+          defaultItem.entity.createEntity(new Position(i, j), defaultLayer);
         }
       }
     }

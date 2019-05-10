@@ -46,7 +46,6 @@ export class Text implements Renderable {
     const measure = new MeasureRenderContext();
     this.renderCharacter(text.charAt(0), measure);
     this.charHeight = measure.getMeasurements().bottom + 4;
-    console.log(text.charAt(0), measure.getMeasurements());
 
     if (width) {
       this.charWidths = [];
